@@ -79,7 +79,7 @@ jobs:
           (cd .evl-lib && ./gradlew :evl-cli:allJar)
           export EVL_LIB="$PWD/.evl-lib" EVL_CLI="java -jar $(ls $PWD/.evl-lib/evl-cli/build/libs/evl-cli-*-all.jar)"
           python3 evals/run.py --runs 3 --report eval-report.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always() && env.ANTHROPIC_API_KEY != ''
         with:
           name: eval-report
