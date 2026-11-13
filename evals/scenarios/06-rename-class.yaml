@@ -1,0 +1,27 @@
+name: Rename a referenced class
+skills: [evl-maintain, evl-validate]
+fixture: shop
+setup:
+  write:
+    docs/evl/inventory.evl.yaml: |
+      evl: "1.0"
+      components:
+        - id: inventory.reservation-api
+          name: Reservation API
+          source: "com.example.shop.inventory.InventoryService#release"
+  commit: true
+  move:
+    - from: src/main/java/com/example/shop/inventory/InventoryService.java
+      to: src/main/java/com/example/shop/inventory/StockService.java
+  replaceAll:
+    - glob: "src/**/*.java"
+      old: InventoryService
+      new: StockService
+prompt: >-
+  I renamed InventoryService to StockService. Fix the EVL documentation. Keep element ids stable.
+checks:
+  validate: true
+  elements: [inventory.service, inventory.reservation-api, inventory.reserve, inventory.release]
+  maxNewElements: 0
+  diffContains: ["StockService#release"]
+  allowedPaths: ["docs/**", "src/**"]

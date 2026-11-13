@@ -1,0 +1,5 @@
+# Spec version the skills target and the evl-lib commit the references are generated from.
+spec: "1.0"
+minCli: "1.0.0"
+repo: ilyaslabs/evl-lib
+ref: e815c499424c317eba509c327a8999df42a52a58

@@ -1,0 +1,12 @@
+{
+  "name": "evl-skills",
+  "owner": { "name": "ilyaslabs" },
+  "plugins": [
+    {
+      "name": "evl",
+      "source": "./",
+      "description": "EVL skills: fundamentals, document, workflows, maintain, validate.",
+      "version": "1.0.0"
+    }
+  ]
+}

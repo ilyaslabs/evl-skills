@@ -1,0 +1,21 @@
+name: Add a module
+skills: [evl-document]
+fixture: shop
+setup:
+  write:
+    src/main/java/com/example/shop/shipping/ShippingService.java: |
+      package com.example.shop.shipping;
+
+      public class ShippingService {
+          public String ship(String orderId) {
+              return "TRACK-" + orderId;
+          }
+      }
+prompt: >-
+  I added a shipping package. Document it as EVL module "shipping" (domain logistics) with its service component.
+checks:
+  validate: true
+  elements: [shipping]
+  minKinds: { module: 3 }
+  maxNewElements: 3
+  allowedPaths: ["src/main/java/com/example/shop/shipping/**", "docs/**"]

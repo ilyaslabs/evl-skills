@@ -1,0 +1,25 @@
+name: Add a workflow
+skills: [evl-workflows]
+fixture: shop
+setup:
+  replace:
+    - file: src/main/java/com/example/shop/order/OrderService.java
+      old: "    @EVL.Step(flow = \"order.placement\", step = \"confirm\")"
+      new: |2-
+            public void cancel(Order order) {
+                if ("SHIPPED".equals(order.status)) {
+                    throw new IllegalStateException("already shipped");
+                }
+                inventory.release(null);
+                order.status = "CANCELLED";
+            }
+
+            @EVL.Step(flow = "order.placement", step = "confirm")
+prompt: >-
+  Document the order cancellation in OrderService.cancel as EVL flow "order.cancellation", including the
+  failure when the order has already shipped and the call to the stock release flow.
+checks:
+  validate: true
+  elements: [order.cancellation]
+  diffContains: ["CALL_FLOW", "inventory\\.release", "FAIL"]
+  allowedPaths: ["docs/**", "src/main/java/com/example/shop/order/OrderService.java"]

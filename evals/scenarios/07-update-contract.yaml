@@ -1,0 +1,18 @@
+name: Update a request contract
+skills: [evl-maintain, evl-document]
+fixture: shop
+setup:
+  replace:
+    - file: src/main/java/com/example/shop/order/CreateOrderRequest.java
+      old: "    public String customerId;"
+      new: |2-
+            public String customerId;
+            public String couponCode;
+prompt: >-
+  CreateOrderRequest has a new optional couponCode field (a promotion code entered at checkout).
+  Document it in EVL.
+checks:
+  validate: true
+  maxNewElements: 0
+  diffContains: ["(?i)coupon|promotion"]
+  allowedPaths: ["src/main/java/com/example/shop/order/CreateOrderRequest.java", "docs/**"]

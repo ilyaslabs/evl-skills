@@ -1,0 +1,4 @@
+.evl-lib/
+__pycache__/
+eval-report.json
+baseline-report.json
