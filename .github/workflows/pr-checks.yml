@@ -9,11 +9,11 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Read spec.lock
         id: lock
         run: echo "ref=$(grep '^ref:' spec.lock | awk '{print $2}')" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: ilyaslabs/evl-lib
           ref: ${{ steps.lock.outputs.ref }}
@@ -50,13 +50,13 @@ jobs:
       - name: Skip without an API key
         if: env.ANTHROPIC_API_KEY == ''
         run: echo "ANTHROPIC_API_KEY is not set; evals skipped."
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         if: env.ANTHROPIC_API_KEY != ''
       - name: Read spec.lock
         if: env.ANTHROPIC_API_KEY != ''
         id: lock
         run: echo "ref=$(grep '^ref:' spec.lock | awk '{print $2}')" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         if: env.ANTHROPIC_API_KEY != ''
         with:
           repository: ilyaslabs/evl-lib
