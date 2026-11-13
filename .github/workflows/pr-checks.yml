@@ -37,7 +37,7 @@ jobs:
         run: ./gradlew :evl-cli:allJar
       - name: Every scenario fails without an agent
         run: |
-          export EVL_LIB=.evl-lib EVL_CLI="java -jar $(ls .evl-lib/evl-cli/build/libs/evl-cli-*-all.jar)"
+          export EVL_LIB="$PWD/.evl-lib" EVL_CLI="java -jar $(ls "$PWD"/.evl-lib/evl-cli/build/libs/evl-cli-*-all.jar)"
           python3 evals/run.py --baseline --report baseline-report.json
 
   evals:
@@ -77,7 +77,7 @@ jobs:
           pip install pyyaml==6.0.2
           npm install -g @anthropic-ai/claude-code
           (cd .evl-lib && ./gradlew :evl-cli:allJar)
-          export EVL_LIB=.evl-lib EVL_CLI="java -jar $(ls $PWD/.evl-lib/evl-cli/build/libs/evl-cli-*-all.jar)"
+          export EVL_LIB="$PWD/.evl-lib" EVL_CLI="java -jar $(ls $PWD/.evl-lib/evl-cli/build/libs/evl-cli-*-all.jar)"
           python3 evals/run.py --runs 3 --report eval-report.json
       - uses: actions/upload-artifact@v4
         if: always() && env.ANTHROPIC_API_KEY != ''
