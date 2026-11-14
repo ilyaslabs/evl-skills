@@ -19,6 +19,7 @@ EVL draws flow maps from tags in the code. There is no YAML and nothing is infer
   - Loop: `each = "size in sizes"` or `[each size in sizes]` adds a loop badge.
   - Error path: `onError = "IOException"` or `[on error IOException]` draws a red dashed arrow.
   - A single condition without a decision: `when = "quota exceeded"` / `[when quota exceeded]` labels the arrow.
+- Shared code used by several flows: list every path, never pick one flow. Annotation: `@Flow({"media-view>url?>public", "media-asset>url?>public"})`. Inline marker: `// @flow media-view>url?>public, media-asset>url?>public: Public URL [when public]`.
 - Steps are numbered from the call graph: the order in which the parent's code calls each child. Don't encode order in ids.
 - Symbol annotations only choose the shape:
 
