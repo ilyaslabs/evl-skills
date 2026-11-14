@@ -1,5 +1,5 @@
 # Makes the EVL CLI available. Prints the command to run it.
-param([string]$Version = $(if ($env:EVL_VERSION) { $env:EVL_VERSION } else { "1.0.0" }))
+param([string]$Version = $(if ($env:EVL_VERSION) { $env:EVL_VERSION } else { "2.0.0" }))
 $ErrorActionPreference = "Stop"
 if (Get-Command evl -ErrorAction SilentlyContinue) { Write-Output "evl"; exit 0 }
 if (-not (Get-Command java -ErrorAction SilentlyContinue)) { Write-Error "Java 17+ is required to run the EVL CLI."; exit 2 }
