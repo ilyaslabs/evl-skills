@@ -37,8 +37,8 @@ Classes with the same symbol kind and name are one resource. A step that calls i
 3. **Tag the meaningful steps** below it: a method that does one business step gets `@Flow("root>step")`; a step that is only a few lines inside a method gets a `// @flow root>step: Label` marker. Aim for 3–7 children per level; go one level deeper only where a step has its own interesting sub-steps.
 4. **Mark resources once** on their classes (`@EVL.Database`, `@EVL.Storage`, `@EVL.Queue`, `@EVL.Cache`, `@EVL.External`).
 5. **Async hops** (queue consumers, event listeners, scheduled follow-ups) get `after = "<path of the publishing step>"`.
-6. **Imports.** Java: `import io.github.ilyaslabs.evl.EVL;` and `import io.github.ilyaslabs.evl.Flow;`. The dependency is `io.github.ilyaslabs:evl-annotations` (compile-only is enough).
-7. **Check.** Run the CLI (`scripts/ensure-evl.sh` prints the command) on the source root: `evl <dir>` prints the tree with step numbers, kinds and resources; fix every `error:` and `warning:` line. If the CLI is unavailable, re-read your tags against the rules above.
+6. **Imports.** Java: `import io.github.ilyaslabs.evl.EVL;` and `import io.github.ilyaslabs.evl.Flow;`. The dependency is `io.github.ilyaslabs:evl-annotations` (compile-only is enough). Until 2.0.0 is released, use the snapshot `claude-project-thread-ctupv3-SNAPSHOT` from `https://central.sonatype.com/repository/maven-snapshots/`; never use 1.0.0 (it has no `@Flow`).
+7. **Check.** Run the CLI on the source root (`scripts/ensure-evl.sh` prints the command; before the 2.0.0 release, build it instead: clone `ilyaslabs/evl-lib` branch `claude/project-thread-ctupv3` into a temp folder and run `./gradlew :evl-cli:allJar`): `evl <dir>` prints the tree with step numbers, kinds and resources; fix every `error:` and `warning:` line. If the CLI is unavailable, re-read your tags against the rules above.
 
 ## When code changes
 
