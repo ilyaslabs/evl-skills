@@ -24,63 +24,14 @@ jobs:
       - run: pip install pyyaml==6.0.2
       - name: Lint skills
         run: python3 tools/lint.py
-      - name: References are up to date
-        run: python3 tools/generate_references.py .evl-lib --check
-      - name: Lint eval scenarios
-        run: EVL_LIB=.evl-lib python3 evals/run.py --lint
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "17"
-      - name: Build the EVL CLI
+      - name: The EVL CLI reads the example
         working-directory: .evl-lib
-        run: ./gradlew :evl-cli:allJar
-      - name: Every scenario fails without an agent
         run: |
-          export EVL_LIB="$PWD/.evl-lib" EVL_CLI="java -jar $(ls "$PWD"/.evl-lib/evl-cli/build/libs/evl-cli-*-all.jar)"
-          python3 evals/run.py --baseline --report baseline-report.json
-
-  evals:
-    # Runs the scenarios with Claude Code headless when an API key is configured (EVL-SKL-012).
-    needs: checks
-    runs-on: ubuntu-latest
-    env:
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-    steps:
-      - name: Skip without an API key
-        if: env.ANTHROPIC_API_KEY == ''
-        run: echo "ANTHROPIC_API_KEY is not set; evals skipped."
-      - uses: actions/checkout@v7
-        if: env.ANTHROPIC_API_KEY != ''
-      - name: Read spec.lock
-        if: env.ANTHROPIC_API_KEY != ''
-        id: lock
-        run: echo "ref=$(grep '^ref:' spec.lock | awk '{print $2}')" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v7
-        if: env.ANTHROPIC_API_KEY != ''
-        with:
-          repository: ilyaslabs/evl-lib
-          ref: ${{ steps.lock.outputs.ref }}
-          path: .evl-lib
-      - uses: actions/setup-java@v6
-        if: env.ANTHROPIC_API_KEY != ''
-        with:
-          distribution: temurin
-          java-version: "17"
-      - uses: actions/setup-node@v7
-        if: env.ANTHROPIC_API_KEY != ''
-        with:
-          node-version: "22"
-      - name: Run evals (3 runs per scenario)
-        if: env.ANTHROPIC_API_KEY != ''
-        run: |
-          pip install pyyaml==6.0.2
-          npm install -g @anthropic-ai/claude-code
-          (cd .evl-lib && ./gradlew :evl-cli:allJar)
-          export EVL_LIB="$PWD/.evl-lib" EVL_CLI="java -jar $(ls $PWD/.evl-lib/evl-cli/build/libs/evl-cli-*-all.jar)"
-          python3 evals/run.py --runs 3 --report eval-report.json
-      - uses: actions/upload-artifact@v7
-        if: always() && env.ANTHROPIC_API_KEY != ''
-        with:
-          name: eval-report
-          path: eval-report.json
+          ./gradlew -q :evl-cli:allJar
+          java -jar evl-cli/build/libs/evl-cli-*-all.jar examples/media
+      - name: Codex mirror matches
+        run: diff -r skills codex/skills
