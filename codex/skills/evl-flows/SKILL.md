@@ -14,6 +14,11 @@ EVL draws flow maps from tags in the code. There is no YAML and nothing is infer
 - `@Flow("image-upload")` on a class, method or constructor puts it on a **path**. Paths are ids separated by `>` (`[A-Za-z0-9_.-]`), and every path in the project merges into one tree: `image-upload`, `image-upload>validate`, `image-upload>s3`, `image-upload>s3>key`.
 - Inside a method body use a comment marker: `// @flow image-upload>s3>key: Build object key` (text after `:` is the label). It covers the code down to the next marker.
 - Optional attributes: `label = "Validate image"`, `description = "size, type, quota"`, `after = "image-upload>queue"` (asynchronous step, drawn dashed after that path).
+- Branches, loops and errors are explicit (EVL never infers them from if/for/catch):
+  - Decision: a path segment ending in `?` is drawn as a diamond; its children are the arms, each with `when`: `// @flow checkout>payment?>card: Charge card [when card]`, `... [when else]`. Optional diamond label: `// @flow checkout>payment?: How does the customer pay?`. Nested ifs nest paths (`card>3ds?>challenge`).
+  - Loop: `each = "size in sizes"` or `[each size in sizes]` adds a loop badge.
+  - Error path: `onError = "IOException"` or `[on error IOException]` draws a red dashed arrow.
+  - A single condition without a decision: `when = "quota exceeded"` / `[when quota exceeded]` labels the arrow.
 - Steps are numbered from the call graph: the order in which the parent's code calls each child. Don't encode order in ids.
 - Symbol annotations only choose the shape:
 
