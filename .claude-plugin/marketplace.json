@@ -5,8 +5,8 @@
     {
       "name": "evl",
       "source": "./",
-      "description": "EVL skills: fundamentals, document, workflows, maintain, validate.",
-      "version": "1.0.0"
+      "description": "EVL 2.0 skill: map flows with @Flow paths and @EVL symbols.",
+      "version": "2.0.0"
     }
   ]
 }

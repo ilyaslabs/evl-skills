@@ -1,7 +1,7 @@
 {
   "name": "evl",
-  "version": "1.0.0",
-  "description": "Skills for reading, writing, maintaining and validating EVL architecture and workflow documentation.",
+  "version": "2.0.0",
+  "description": "Teaches agents to tag Java and Kotlin code with EVL 2.0 @Flow paths and symbols for hand-drawn flow maps.",
   "author": { "name": "ilyaslabs" },
   "homepage": "https://github.com/ilyaslabs/evl-skills",
   "repository": "https://github.com/ilyaslabs/evl-skills",
