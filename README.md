@@ -17,6 +17,17 @@ Targets spec **2.0** and CLI **2.0.0+** (see [`spec.lock`](spec.lock)).
 
 **Any Agent Skills-compatible tool:** each folder in [`skills/`](skills/) is a self-contained skill (`SKILL.md`, `scripts/`).
 
+## Commands
+
+| Claude Code | Codex | What it does |
+|---|---|---|
+| `/evl:init [notes]` | `/prompts:evl-init` | Map the whole project: entry points, steps, branches, loops, errors, resources; fix CLI warnings |
+| `/evl:map <module>` | `/prompts:evl-map` | Map one module or folder |
+| `/evl:check [folder]` | `/prompts:evl-check` | Run the CLI, fix warnings, show the flow tree |
+| `/evl:update [base]` | `/prompts:evl-update` | Re-tag only what changed in the git diff |
+
+Codex: copy `codex/prompts/*.md` into `~/.codex/prompts/`.
+
 ## Skill
 
 | Skill | Purpose |
