@@ -1,6 +1,6 @@
 {
   "name": "evl",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Teaches agents to tag Java and Kotlin code with EVL 2.0 @Flow paths and symbols for hand-drawn flow maps.",
   "author": { "name": "ilyaslabs" },
   "homepage": "https://github.com/ilyaslabs/evl-skills",
