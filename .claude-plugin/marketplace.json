@@ -6,7 +6,7 @@
       "name": "evl",
       "source": "./",
       "description": "EVL 2.0 skill: map flows with @Flow paths and @EVL symbols.",
-      "version": "2.1.0"
+      "version": "2.1.1"
     }
   ]
 }

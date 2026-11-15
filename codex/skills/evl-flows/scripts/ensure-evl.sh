@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 # Makes the EVL CLI available. Prints the command to run it.
-# Usage: ensure-evl.sh [version]   (default: the version in EVL_VERSION or 2.0.0)
+# Usage: ensure-evl.sh [version]   (default: the version in EVL_VERSION or 2.0.1)
 set -eu
-VERSION="${1:-${EVL_VERSION:-2.0.0}}"
+VERSION="${1:-${EVL_VERSION:-2.0.1}}"
 if command -v evl >/dev/null 2>&1; then
   echo "evl"
   exit 0

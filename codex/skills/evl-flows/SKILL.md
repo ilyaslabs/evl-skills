@@ -19,7 +19,7 @@ EVL draws flow maps from tags in the code. There is no YAML and nothing is infer
   - Loop: `each = "size in sizes"` or `[each size in sizes]` adds a loop badge.
   - Error path: `onError = "IOException"` or `[on error IOException]` draws a red dashed arrow.
   - A single condition without a decision: `when = "quota exceeded"` / `[when quota exceeded]` labels the arrow.
-- Shared code: tag it in every flow where it's a meaningful step; don't tag it in flows that only use it to build a response. Annotation: `@Flow({"media-view>url?>public", "media-asset>url?>public"})`. Inline marker: `// @flow media-view>url?>public, media-asset>url?>public: Public URL [when public]`.
+- Shared code: tag it in every flow where it's a meaningful step; don't tag it in flows that only use it to build a response. Annotation: `@Flow("media-view>url?>public, media-asset>url?>public")` (one string, comma-separated; never `@Flow({...})`, `value` is a single String). Inline marker: `// @flow media-view>url?>public, media-asset>url?>public: Public URL [when public]`.
 - Steps are numbered from the call graph: the order in which the parent's code calls each child. Don't encode order in ids.
 - Symbol annotations only choose the shape:
 
@@ -29,7 +29,7 @@ EVL draws flow maps from tags in the code. There is no YAML and nothing is infer
 | `@EVL.Job(schedule = "0 0 2 * * *")` or `@EVL.Job(trigger = "media.uploaded")` | job method | clock |
 | `@EVL.Database("postgres")` | repository / DAO class or interface | cylinder |
 | `@EVL.Storage("Amazon S3")` | storage client class | bucket |
-| `@EVL.Queue("media.uploaded")` | publisher / consumer class | pipe |
+| `@EVL.Queue("media.uploaded")` | publisher / consumer class (repeat it for several topics) | pipe |
 | `@EVL.Cache(ttl = "15m")` | cache class | lightning bolt |
 | `@EVL.External("Stripe")` | third-party client class | cloud |
 | `@EVL.Interface`, `@EVL.Service`, `@EVL.Actor` | ports, components, people/clients | lollipop, box, stick figure |
@@ -43,7 +43,7 @@ Classes with the same symbol kind and name are one resource. A step that calls i
 3. **Tag the meaningful steps** below it: a method that does one business step gets `@Flow("root>step")`; a step that is only a few lines inside a method gets a `// @flow root>step: Label` marker. Aim for 3–7 children per level; go one level deeper only where a step has its own interesting sub-steps.
 4. **Mark resources once** on their classes (`@EVL.Database`, `@EVL.Storage`, `@EVL.Queue`, `@EVL.Cache`, `@EVL.External`).
 5. **Async hops** (queue consumers, event listeners, scheduled follow-ups) get `after = "<path of the publishing step>"`.
-6. **Imports.** Java: `import io.github.ilyaslabs.evl.EVL;` and `import io.github.ilyaslabs.evl.Flow;`. The dependency is `io.github.ilyaslabs:evl-annotations` (compile-only is enough). Use version 2.0.0 or newer from Maven Central; never use 1.0.0 (it has no `@Flow`).
+6. **Imports.** Java: `import io.github.ilyaslabs.evl.EVL;` and `import io.github.ilyaslabs.evl.Flow;`. The dependency is `io.github.ilyaslabs:evl-annotations` (compile-only is enough). Use version 2.0.1 or newer from Maven Central; never use 1.0.0 (it has no `@Flow`).
 7. **Check.** Run the CLI on the source root (`scripts/ensure-evl.sh` downloads it if needed and prints the command): `evl <dir>` prints the tree with step numbers, `when`/`on error`/`each` notes, kinds and resources; fix every `error:` and `warning:` line. If the CLI is unavailable, re-read your tags against the rules above.
 
 ## When code changes

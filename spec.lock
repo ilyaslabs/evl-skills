@@ -1,5 +1,5 @@
 # Spec version the skills target and the evl-lib commit they were written against.
 spec: "2.0"
-minCli: "2.0.0"
+minCli: "2.0.1"
 repo: ilyaslabs/evl-lib
-ref: 68fe4e55203df9f2931d329571c4a833468ccf37
+ref: 13b13ac6a84534931692e44da4b9649ffa5d983d
